@@ -6,6 +6,7 @@ gem 'rails', '4.1.1'
 group :test, :development do
     gem 'rspec-rails'
     gem 'capybara'
+    gem 'selenium-webdriver'
 end
 
 group :development do

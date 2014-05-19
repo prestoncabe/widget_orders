@@ -1,0 +1,31 @@
+<h1>Place a Widget Order</h1>
+
+<%# <a href="#confirm" data-confirm="Are you sure?">I want to code for 20 hrs today.</a> %>
+
+<%= form_for(@order, remote: true) do |form| %>
+  <div>
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
+  </div>
+  <div>
+    <%= form.radio_button :color, 'red' %>
+    <%= form.label :color, 'Red', value: 'red' %>
+    <%= form.radio_button :color, 'blue' %>
+    <%= form.label :color, 'Blue', value: 'blue' %>
+    <%= form.radio_button :color, 'yellow' %>
+    <%= form.label :color, 'Yellow', value: 'yellow' %>
+  </div>
+  <div>
+    <%= form.label :date_needed_by %>
+    <%= form.date_field :date_needed_by %>
+  </div>
+  <div>
+    <%= form.radio_button :widget_type, 'Widget' %>
+    <%= form.label :widget_type, 'Widget', value: 'Widget' %>
+    <%= form.radio_button :widget_type, 'Widget Pro' %>
+    <%= form.label :widget_type, 'Widget Pro', value: 'Widget Pro' %>
+    <%= form.radio_button :widget_type, 'Widget Xtreme' %>
+    <%= form.label :widget_type, 'Widget Xtreme', value: 'Widget Xtreme' %>
+  </div>
+  <%= form.submit %>
+<% end %>
