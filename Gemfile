@@ -10,6 +10,7 @@ group :test, :development do
   gem 'database_cleaner', '~> 1.2.0'
   gem 'spring'
   gem 'timecop'
+  gem 'shoulda-matchers', require: false
 end
 
 gem 'pry-rails'
