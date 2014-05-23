@@ -57,6 +57,18 @@ feature 'Manage orders', js: true do
     expect(Order.all.length).to eq 1
   end
 
+  scenario 'successful submission displays a confirmation message' do
+    visit new_order_path
+
+    order = create_valid_order
+
+    expect(page).to have_text "id: #{order.id}"
+    expect(page).to have_text "quantity: #{order.quantity}"
+    expect(page).to have_text "color: \"#{order.color}\""
+    expect(page).to have_text "date_needed_by: \"#{order.date_needed_by}\""
+    expect(page).to have_text "type: \"#{order.widget_type}\""
+  end
+
   def create_order(options = {})
     within(:css, 'form#new_order') do
       fill_in 'Quantity', with: options.fetch(:quantity, '')
@@ -66,6 +78,11 @@ feature 'Manage orders', js: true do
 
       click_button 'Create Order'
     end
+  end
+
+  def create_valid_order
+    create_order(quantity: '12', color: 'Red', date_needed_by: (Date.today + 7), widget_type: 'Widget')
+    Order.first
   end
 end
 
