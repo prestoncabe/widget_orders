@@ -6,7 +6,8 @@
 
 - run 'rake db:schema:load'
 
-- run rspec suite: 'rspec'
+- run rspec suite: 'rspec' (uses selenium-webdriver, which requires a
+  Firefox version 4 or later)
 
 - play with the app: 'rails server'
 
