@@ -9,6 +9,7 @@ group :test, :development do
   gem 'selenium-webdriver', '~> 2.41.0'
   gem 'database_cleaner', '~> 1.2.0'
   gem 'spring'
+  gem 'timecop'
 end
 
 gem 'pry-rails'

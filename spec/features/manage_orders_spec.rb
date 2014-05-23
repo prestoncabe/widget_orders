@@ -13,13 +13,13 @@ feature 'Manage orders', js: true do
   scenario 'valid form submission results in persisted data' do
     visit new_order_path
 
-    create_order(quantity: '4', color: 'Blue', date_needed_by: '2014-06-01', widget_type: 'Widget')
+    create_order(quantity: '4', color: 'Blue', date_needed_by: (Date.today + 7), widget_type: 'Widget')
 
     order = Order.first
 
     expect(order.quantity).to eq 4
     expect(order.color).to eq 'blue'
-    expect(order.date_needed_by).to eq Date.parse('2014-06-01')
+    expect(order.date_needed_by).to eq (Date.today + 7)
     expect(order.widget_type).to eq 'Widget'
   end
 
@@ -27,21 +27,34 @@ feature 'Manage orders', js: true do
     visit new_order_path
 
     create_order(color: 'Blue', date_needed_by: '2014-07-20', widget_type: 'Widget Xtreme')
-    create_order(quantity: '16', date_needed_by: '2014-06-25', widget_type: 'Widget')
+    create_order(quantity: '16', date_needed_by: (Date.today + 12), widget_type: 'Widget')
     create_order(quantity: '2', color: 'Yellow', widget_type: 'Widget Pro')
-    create_order(quantity: '299486910586', color: 'Red', date_needed_by: '2156-01-03')
+    create_order(quantity: '299486910586', color: 'Red', date_needed_by: (Date.today + 9))
 
     expect(Order.all.length).to eq 0
   end
 
-  scenario 'submission fails if quantity is not a positive integer' do
+  scenario 'submission fails if quantity entered is invalid' do
     visit new_order_path
 
-    create_order(quantity: '-1', color: 'Yellow', date_needed_by: '2020-02-09', widget_type: 'Widget')
-    create_order(quantity: '0', color: 'Red', date_needed_by: '2018-05-14', widget_type: 'Widget Xtreme')
-    create_order(quantity: '23.4', color: 'Blue', date_needed_by: '2015-08-01', widget_type: 'Widget Pro')
+    create_order(quantity: '-1', color: 'Yellow', date_needed_by: (Date.today + 106), widget_type: 'Widget')
+    create_order(quantity: '0', color: 'Red', date_needed_by: (Date.today + 9), widget_type: 'Widget Xtreme')
+    create_order(quantity: '23.4', color: 'Blue', date_needed_by: (Date.today + 60), widget_type: 'Widget Pro')
 
     expect(Order.all.length).to eq 0
+  end
+
+  scenario 'submission fails if date_needed_by entered is invalid' do
+    visit new_order_path
+
+    # bad
+    create_order(quantity: '79854', color: 'Yellow', date_needed_by: (Date.today + 6), widget_type: 'Widget Xtreme')
+    create_order(quantity: '984', color: 'Blue', date_needed_by: (Date.today + 3), widget_type: 'Widget Pro')
+
+    # good
+    create_order(quantity: '12', color: 'Red', date_needed_by: (Date.today + 7), widget_type: 'Widget')
+
+    expect(Order.all.length).to eq 1
   end
 
   def create_order(options = {})
