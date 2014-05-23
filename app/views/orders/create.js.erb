@@ -1,6 +1,6 @@
 $('#order_quantity').val('');
 $("input[name='order[color]']").prop("checked", false);
-$('#date_needed_by').val('');
+$('#order_date_needed_by').val('');
 $("input[name='order[widget_type]']").prop("checked", false);
 
 $('#feedback').html("<%= escape_javascript(render(:partial => 'orders/feedback', :locals => { :order => @order})) %>");
