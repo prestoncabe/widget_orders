@@ -34,6 +34,16 @@ feature 'Manage orders', js: true do
     expect(Order.all.length).to eq 0
   end
 
+  scenario 'submission fails if quantity is not a positive integer' do
+    visit new_order_path
+
+    create_order(quantity: '-1', color: 'Yellow', date_needed_by: '2020-02-09', widget_type: 'Widget')
+    create_order(quantity: '0', color: 'Red', date_needed_by: '2018-05-14', widget_type: 'Widget Xtreme')
+    create_order(quantity: '23.4', color: 'Blue', date_needed_by: '2015-08-01', widget_type: 'Widget Pro')
+
+    expect(Order.all.length).to eq 0
+  end
+
   def create_order(options = {})
     within(:css, 'form#new_order') do
       fill_in 'Quantity', with: options.fetch(:quantity, '')
